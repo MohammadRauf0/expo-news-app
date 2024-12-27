@@ -14,6 +14,7 @@ import { NewsDataType } from "@/types";
 import Loading from "@/components/Loading";
 import { Colors } from "@/constants/Colors";
 import Moment from "moment";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type Props = {};
 
@@ -22,6 +23,8 @@ const NewsDetails = (props: Props) => {
 
   const [news, setNews] = useState<NewsDataType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const [bookmark, setBookmark] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -57,6 +60,18 @@ const NewsDetails = (props: Props) => {
     }
   };
 
+  const saveBookmark = async (newsId: string) => {
+    setBookmark(true);
+
+    const token = await AsyncStorage.getItem("bookmark");
+    let bookmarks = token ? JSON.parse(token) : [];
+
+    if (bookmarks.includes(newsId)) {
+      bookmarks.push(newsId);
+      await AsyncStorage.setItem("bookmark", JSON.stringify(bookmarks));
+    }
+  };
+
   return (
     <>
       <Stack.Screen
@@ -67,7 +82,11 @@ const NewsDetails = (props: Props) => {
             </TouchableOpacity>
           ),
           headerRight: () => (
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity
+              onPress={() => {
+                saveBookmark(id);
+              }}
+            >
               <Ionicons name="heart-outline" size={22} />
             </TouchableOpacity>
           ),
