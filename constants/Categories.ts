@@ -9,7 +9,7 @@ const newsCategoryList = [
     id: 2,
     title: 'Politics',
     slug: 'politics',
-    selected: true,
+    selected: false,
   },
   {
     id: 3,
@@ -21,7 +21,7 @@ const newsCategoryList = [
     id: 4,
     title: 'Entertainment',
     slug: 'entertainment',
-    selected: true,
+    selected: false,
   },
   {
     id: 5,
