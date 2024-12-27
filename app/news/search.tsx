@@ -1,11 +1,17 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  FlatList,
+} from "react-native";
 import React, { useEffect, useState } from "react";
-import { router, Stack, useLocalSearchParams } from "expo-router";
+import { Link, router, Stack, useLocalSearchParams } from "expo-router";
 import { NewsDataType } from "@/types";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 import Loading from "@/components/Loading";
-import { FlatList } from "react-native-gesture-handler";
+import NewsList, { NewsItem } from "@/components/NewsList";
 
 type Props = {};
 
@@ -62,7 +68,8 @@ const Search = (props: Props) => {
               <Ionicons name="arrow-back" size={22} />
             </TouchableOpacity>
           ),
-          title: "",
+          title: "Search",
+          headerTitleAlign: "center",
         }}
       />
       <View style={styles.container}>
@@ -73,11 +80,15 @@ const Search = (props: Props) => {
             data={news}
             keyExtractor={(_, index) => `list_item_${index}`}
             showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <View>
-                <Text>{item.title}</Text>
-              </View>
-            )}
+            renderItem={({ item, index }) => {
+              return (
+                <Link href={`/news/${item.article_id}`} asChild key={index}>
+                  <TouchableOpacity activeOpacity={1}>
+                    <NewsItem item={item} />
+                  </TouchableOpacity>
+                </Link>
+              );
+            }}
           />
         )}
       </View>
