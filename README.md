@@ -1,4 +1,3 @@
-````markdown
 # 🚀 Expo News App
 
 A modern, mobile-first news application built with Expo and React Native. The app provides real-time news updates, category filtering, and article bookmarking capabilities, all wrapped in a clean and intuitive user interface.
@@ -39,11 +38,11 @@ A modern, mobile-first news application built with Expo and React Native. The ap
 ## 📦 Installation
 
 1. **Clone the repository**:
+
    ```bash
    git clone https://github.com/yourusername/expo-news-app.git
    cd expo-news-app
    ```
-````
 
 2. **Install dependencies**:
 
