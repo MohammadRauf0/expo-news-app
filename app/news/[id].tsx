@@ -32,6 +32,12 @@ const NewsDetails = (props: Props) => {
     }
   }, [id]);
 
+  useEffect(() => {
+    if (!isLoading) {
+      renderBookmark(news[0].article_id);
+    }
+  }, [isLoading]);
+
   const cache = new Map();
 
   const getNews = async () => {
@@ -61,14 +67,62 @@ const NewsDetails = (props: Props) => {
   };
 
   const saveBookmark = async (newsId: string) => {
-    setBookmark(true);
+    try {
+      setBookmark(true);
+
+      const token = await AsyncStorage.getItem("bookmark");
+      const res = token ? JSON.parse(token) : [];
+
+      if (Array.isArray(res)) {
+        const data = res.find((value: string) => value === newsId);
+        if (!data) {
+          res.push(newsId);
+          await AsyncStorage.setItem("bookmark", JSON.stringify(res));
+          alert("News Saved!");
+        } else {
+          alert("News is already bookmarked!");
+        }
+      } else {
+        const bookmarks = [newsId];
+        await AsyncStorage.setItem("bookmark", JSON.stringify(bookmarks));
+        alert("News Saved!");
+      }
+    } catch (error) {
+      console.error("Error saving bookmark:", error);
+      alert("Failed to save bookmark. Please try again.");
+    }
+  };
+
+  const removeBookmark = async (newsId: string) => {
+    setBookmark(false);
 
     const token = await AsyncStorage.getItem("bookmark");
-    let bookmarks = token ? JSON.parse(token) : [];
+    if (token) {
+      const res = JSON.parse(token);
+      const updatedBookmarks = res.filter((id: string) => id !== newsId);
+      await AsyncStorage.setItem("bookmark", JSON.stringify(updatedBookmarks));
+      alert("News Unsaved!");
+    }
+  };
 
-    if (bookmarks.includes(newsId)) {
-      bookmarks.push(newsId);
-      await AsyncStorage.setItem("bookmark", JSON.stringify(bookmarks));
+  const renderBookmark = async (newsId: string) => {
+    try {
+      const token = await AsyncStorage.getItem("bookmark");
+      if (token) {
+        const res = JSON.parse(token);
+        if (Array.isArray(res)) {
+          const data = res.find((value: string) => value === newsId);
+          if (data) {
+            setBookmark(true);
+          } else {
+            setBookmark(false);
+          }
+        }
+      } else {
+        setBookmark(false);
+      }
+    } catch (error) {
+      console.error("Error rendering bookmark:", error);
     }
   };
 
@@ -84,10 +138,16 @@ const NewsDetails = (props: Props) => {
           headerRight: () => (
             <TouchableOpacity
               onPress={() => {
-                saveBookmark(id);
+                bookmark
+                  ? removeBookmark(news[0].article_id)
+                  : saveBookmark(news[0].article_id);
               }}
             >
-              <Ionicons name="heart-outline" size={22} />
+              <Ionicons
+                name={bookmark ? "heart" : "heart-outline"}
+                size={22}
+                color={bookmark ? "red" : Colors.black}
+              />
             </TouchableOpacity>
           ),
           title: "",

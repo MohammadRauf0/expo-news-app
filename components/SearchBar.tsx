@@ -5,10 +5,13 @@ import { Colors } from "@/constants/Colors";
 
 type Props = {
   withHorizontalPadding?: boolean;
-  setSearchQuary: Function;
+  setSearchQuary?: Function;
 };
 
-const SearchBar = ({ withHorizontalPadding, setSearchQuary }: Props) => {
+const SearchBar = ({
+  withHorizontalPadding,
+  setSearchQuary = () => {},
+}: Props) => {
   return (
     <View
       style={[
