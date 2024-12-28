@@ -1,5 +1,7 @@
 # 🚀 Expo News App
 
+![Cover Image](https://github.com/MohammadRauf0/expo-news-app/blob/main/assets/images/image.png?raw=true)
+
 A modern, mobile-first news application built with Expo and React Native. The app provides real-time news updates, category filtering, and article bookmarking capabilities, all wrapped in a clean and intuitive user interface.
 
 ---
@@ -157,12 +159,6 @@ npm install axios moment @react-native-async-storage/async-storage react-native-
 - **SDK Compatibility**: This app only works on Expo SDK 51.
 - **API Key**: A valid NewsData API key is required for API functionality.
 - **Data Fetching Delay**: Fetching breaking news includes a 2-second delay for better UX.
-
----
-
-## 🎨 Screenshots
-
-[Add screenshots to showcase your app features.]
 
 ---
 
