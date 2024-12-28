@@ -185,19 +185,8 @@ npm install axios moment @react-native-async-storage/async-storage react-native-
 
 ---
 
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
 ## 🙏 Acknowledgments
 
 - **NewsData.io**: For the powerful API service.
 - **Expo Team**: For an incredible mobile development framework.
 - **React Native Community**: For extensive libraries and support.
-
-```
-
-This refined `README.md` is clean, professional, and detailed, making it suitable for showcasing on GitHub.
-```
