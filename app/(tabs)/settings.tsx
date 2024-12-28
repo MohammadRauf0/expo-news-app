@@ -1,5 +1,5 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import { StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
 import { Stack } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -7,6 +7,9 @@ import { MaterialIcons } from "@expo/vector-icons";
 type Props = {};
 
 const Page = (props: Props) => {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+
   return (
     <>
       <Stack.Screen
@@ -52,19 +55,16 @@ const Page = (props: Props) => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.itemButton}>
           <Text style={styles.itemButtonText}>Dark Mode</Text>
-          <MaterialIcons
-            name="arrow-forward-ios"
-            size={16}
-            color={Colors.lightGrey}
+          <Switch
+            trackColor={{ false: "#767577", true: "#3e3e3e" }}
+            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+            onValueChange={toggleSwitch}
+            value={isEnabled}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.itemButton}>
-          <Text style={styles.itemButtonText}>Log Out</Text>
-          <MaterialIcons
-            name="arrow-forward-ios"
-            size={16}
-            color={Colors.lightGrey}
-          />
+          <Text style={[styles.itemButtonText, { color: "red" }]}>Log Out</Text>
+          <MaterialIcons name="logout" size={16} color={"red"} />
         </TouchableOpacity>
       </View>
     </>
@@ -86,6 +86,8 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     borderBottomColor: Colors.background,
     borderBottomWidth: 1,
+    alignItems: "center",
+    height: 60,
   },
   itemButtonText: {
     fontSize: 14,
